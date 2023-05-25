@@ -11,6 +11,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
+import java.io.File;
 
 public class HelloController {
     @FXML
@@ -29,14 +33,17 @@ public class HelloController {
     private ListView<YoutubeVideo> lvYtVideos;
     private FilteredList<YoutubeVideo> videos;
     private YoutubeVideoList youtubeVideoList;
+    private FileChooser fileChooser;
 
     @FXML
     void initialize(){
         this.youtubeVideoList = YoutubeVideoList.getInstance();
         this.videos = new FilteredList<>(this.youtubeVideoList.getVideos());
+        this.fileChooser = new FileChooser();
 
         progressBar.setProgress(0.5);
 
+        this.deleteBtn.setDisable(true);
         this.lvYtVideos.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<YoutubeVideo>() {
             @Override
             public void changed(ObservableValue<? extends YoutubeVideo> observableValue, YoutubeVideo from, YoutubeVideo to) {
@@ -47,10 +54,8 @@ public class HelloController {
                 }
             }
         });
-
         this.lvYtVideos.setItems(this.videos);
     }
-
     @FXML
     void addVideo(ActionEvent event) {
         String url = ytTxtField.getText();
@@ -73,7 +78,7 @@ public class HelloController {
 
     @FXML
     void selectFile(ActionEvent event) {
-
+        File selectedFile = fileChooser.showOpenDialog(new Stage());
     }
 
 

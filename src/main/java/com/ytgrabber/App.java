@@ -14,6 +14,7 @@ public class App extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 350, 400);
         stage.setTitle("Youtube Grabber");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
     public static void main(String[] args) {

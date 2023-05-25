@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.PixelReader;
 
+import java.io.File;
 import java.util.LinkedList;
 
 public class YoutubeVideoList {
@@ -21,6 +22,10 @@ public class YoutubeVideoList {
         return instance;
     }
 
+    public void addVideosFromFile(File file){
+
+    }
+
     public void addVideo(String url){
         YoutubeVideo youtubeVideo = new YoutubeVideo(url);
         this.videos.add(youtubeVideo);
@@ -30,6 +35,8 @@ public class YoutubeVideoList {
         this.videos.remove(idx);
     }
 
+
+
     public void download(){
         this.videos.forEach(YoutubeVideo::download);
     }
@@ -37,5 +44,7 @@ public class YoutubeVideoList {
     public ObservableList<YoutubeVideo> getVideos(){
         return FXCollections.unmodifiableObservableList(this.videos);
     }
+
+
 
 }
