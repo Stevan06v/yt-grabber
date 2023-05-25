@@ -26,6 +26,10 @@ public class YoutubeVideoList {
         this.videos.add(youtubeVideo);
     }
 
+    public void delete(int idx){
+        this.videos.remove(idx);
+    }
+
     public void download(){
         this.videos.forEach(YoutubeVideo::download);
     }

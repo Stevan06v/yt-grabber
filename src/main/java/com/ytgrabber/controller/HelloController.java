@@ -2,6 +2,8 @@ package com.ytgrabber.controller;
 
 import com.ytgrabber.model.YoutubeVideo;
 import com.ytgrabber.model.YoutubeVideoList;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,6 +17,8 @@ public class HelloController {
     private Button addBtn;
     @FXML
     private Button downloadBtn;
+    @FXML
+    private Button deleteBtn;
     @FXML
     private Button fileSelection;
     @FXML
@@ -31,16 +35,31 @@ public class HelloController {
         this.youtubeVideoList = YoutubeVideoList.getInstance();
         this.videos = new FilteredList<>(this.youtubeVideoList.getVideos());
 
-        this.lvYtVideos.setItems(this.videos);
+        progressBar.setProgress(0.5);
 
+        this.lvYtVideos.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<YoutubeVideo>() {
+            @Override
+            public void changed(ObservableValue<? extends YoutubeVideo> observableValue, YoutubeVideo from, YoutubeVideo to) {
+                if(to == null){
+                    deleteBtn.setDisable(true);
+                }else{
+                    deleteBtn.setDisable(false);
+                }
+            }
+        });
+
+        this.lvYtVideos.setItems(this.videos);
     }
 
     @FXML
     void addVideo(ActionEvent event) {
         String url = ytTxtField.getText();
         this.youtubeVideoList.addVideo(url);
-
-
+    }
+    @FXML
+    public void deleteVideos(ActionEvent actionEvent) {
+        int selectedIdx = this.lvYtVideos.getSelectionModel().getSelectedIndex();
+        this.youtubeVideoList.delete(selectedIdx);
     }
 
     @FXML
@@ -56,4 +75,6 @@ public class HelloController {
     void selectFile(ActionEvent event) {
 
     }
+
+
 }
